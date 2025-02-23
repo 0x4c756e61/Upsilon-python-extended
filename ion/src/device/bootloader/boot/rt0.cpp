@@ -145,8 +145,6 @@ void __attribute__((noinline)) __attribute__((section(".recovery_boot"))) __attr
     uint32_t address = Ion::Device::BootloaderSharedData::sharedBootloaderData()->storageAddress();
     uint32_t size = Ion::Device::BootloaderSharedData::sharedBootloaderData()->storageSize();
 
-    size_t storageSize = (&_static_storage_end - &_static_storage_start);
-
     memcpy(&_static_storage_start, (void*)address, size);
 
     size_t dataSectionLength = (&_data_section_end_ram - &_data_section_start_ram);

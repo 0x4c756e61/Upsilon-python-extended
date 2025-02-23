@@ -18,7 +18,7 @@ namespace Device
       uint32_t m_header;
       uint32_t m_storageAddress;
       uint32_t m_storageSize;
-      uint32_t m_footer;
+      // uint32_t m_footer;
   };
 }
 }

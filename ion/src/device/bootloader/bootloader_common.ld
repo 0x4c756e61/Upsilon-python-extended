@@ -58,7 +58,7 @@ SECTIONS {
   } > FLASH
 
   .recovery_boot : {
-    . = ORIGIN(FLASH) + USERLAND_OFFSET + 0x100;
+    . = ORIGIN(FLASH) + USERLAND_OFFSET + 0x80;
     KEEP(*(.recovery_boot));
   } >FLASH
 
@@ -101,17 +101,6 @@ SECTIONS {
     _data_section_end_ram = .;
   } >SRAM AT> FLASH
 
-  /*
-   * We set the .static_storage right after the .data section, even if it's a bss region, because we need to fix it in memory.
-   */
-   .static_storage : {
-    . = ALIGN(4);
-    _bss_section_start_ram = .;
-    _static_storage_start = .;
-    KEEP (*(.static_storage))
-    _static_storage_end = .;
-   } > SRAM
-
   .bss : {
     /* The bss section contains data for all uninitialized variables
      * So like the .data section, it will go in RAM, but unlike the data section
@@ -120,6 +109,10 @@ SECTIONS {
      * Before execution, crt0 will erase that section of memory though, so we'll
      * need pointers to the beginning and end of this section. */
     . = ALIGN(4);
+    _bss_section_start_ram = .;
+    _static_storage_start = .;
+    KEEP (*(.static_storage))
+    _static_storage_end = .;
     *(.bss)
     *(.bss.*)
     /* The compiler may choose to allocate uninitialized global variables as

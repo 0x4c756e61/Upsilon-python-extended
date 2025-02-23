@@ -11,11 +11,13 @@ namespace Ion {
   }
 
   Device::BootloaderSharedData::BootloaderSharedData() {
-    if (m_header != Magic || m_footer != Magic) {
+    // FIXME: Find why calculator is crashing when footer is defined
+    // if (m_header != Magic || m_footer != Magic) {
+    if (m_header != Magic) {
       m_header = Magic;
       m_storageAddress = 0;
       m_storageSize = 0;
-      m_footer = Magic;
+      // m_footer = Magic;
    }
   }
 }
