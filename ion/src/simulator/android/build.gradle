@@ -16,7 +16,7 @@ buildscript {
     google()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:8.7.1'
+    classpath 'com.android.tools.build:gradle:8.8.1'
   }
 }
 
@@ -54,9 +54,9 @@ android {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt')
       if (projectVariable('SIGNING_STORE_FILE')) {
-        signingConfig signingConfigs.environment
+        signingConfig = signingConfigs.environment
       } else {
-        signingConfig signingConfigs.debug
+        signingConfig = signingConfigs.debug
       }
     }
   }
@@ -70,15 +70,15 @@ android {
     }
   }
   lintOptions {
-    abortOnError false
-    checkReleaseBuilds false
+    abortOnError = false
+    checkReleaseBuilds = false
   }
 }
 
 dependencies {
   implementation fileTree(include: ['*.jar'], dir: 'libs')
   implementation "androidx.appcompat:appcompat:1.7.0"
-  implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.0.21"))
+  implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.1.10"))
 }
 
 java{toolchain{languageVersion=JavaLanguageVersion.of(21)}}

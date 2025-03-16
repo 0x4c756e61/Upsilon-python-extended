@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install curl git python3 build-essential cmake pkg-config -y
+          sudo apt-get install build-essential cmake libfreetype-dev -y
       - name: Get latest gint commit hash
         run: |
           LATEST_COMMIT_HASH=$(curl --silent https://git.planet-casio.com/api/v1/repos/Lephenixnoir/gint/branches/master | jq -r .commit.id)
@@ -108,6 +108,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: 'recursive'
+      - run: sudo apt-get install imagemagick libfreetype-dev libpng-dev
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -223,8 +224,7 @@ jobs:
   bootloader:
     runs-on: ubuntu-latest
     steps:
-      # - run: sudo apt-get install build-essential imagemagick libfreetype6-dev libjpeg-dev libpng-dev pkg-config gcc-arm-none-eabi
-      - run: sudo apt-get install build-essential imagemagick libfreetype6-dev libjpeg-dev libpng-dev pkg-config
+      - run: sudo apt-get install build-essential imagemagick libfreetype6-dev libjpeg-dev libpng-dev pkg-config # gcc-arm-none-eabi
       - uses: numworks/setup-arm-toolchain@2022-08
       - uses: actions/checkout@v4
         with:
@@ -298,6 +298,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: 'recursive'
+      - run: sudo apt-get install libfreetype-dev libpng-dev
       - run: make -j2 PLATFORM=simulator TARGET=web
       - run: make -j2 PLATFORM=simulator TARGET=web test.js
       - run: node output/release/simulator/web/test.js --headless
@@ -347,6 +348,7 @@ jobs:
     if: github.event.inputs.triggerMacos == 'yes' || github.event.inputs.triggerMacos == ''
     runs-on: macOS-latest
     steps:
+      - run: brew install python-setuptools
       - run: brew install numworks/tap/epsilon-sdk
       - uses: actions/checkout@v4
         with:
@@ -362,6 +364,7 @@ jobs:
     if: github.event.inputs.triggerIos == 'yes' || github.event.inputs.triggerIos == ''
     runs-on: macOS-latest
     steps:
+      - run: brew install python-setuptools
       - run: brew install numworks/tap/epsilon-sdk
       - uses: actions/checkout@v4
         with:
